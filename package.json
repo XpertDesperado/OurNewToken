@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/XpertDesperado/OurNewToken/issues"
   },
-  "homepage": "https://github.com/XpertDesperado/OurNewToken#readme"
+  "homepage": "https://github.com/XpertDesperado/OurNewToken#readme",
+  "dependencies": {
+    "request": "^2.81.0"
+  }
 }
