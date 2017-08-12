@@ -1,0 +1,8 @@
+[[CURRENCIES]]
+code="SkyToken
+issuer="GD5T6IPRNCKFOHQWT264YPKOZAWUMMZOLZBJ6BNQMUGPWGRLBK3U7ZNP"
+display_decimals=2 
+name="goat share"
+desc="10 SkyTokens entitle you to a night of music and fun at the Skypad."
+conditions="There will only ever be 1000 SkyTokens in existence."
+image="http://i41.tinypic.com/2uz3wph.jpg"
