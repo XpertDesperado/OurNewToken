@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/XpertDesperado/OurNewToken#readme",
   "dependencies": {
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "stellar-sdk": "^0.7.3"
   }
 }
