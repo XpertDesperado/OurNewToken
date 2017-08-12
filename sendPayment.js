@@ -2,6 +2,7 @@
 var config = require('./config.json');
 var test1KeyPair = config.testAccount1;
 var test2KeyPair = config.testAccount2;
+var test3KeyPair = config.testAccount3;
 
 
 // SDK which uses the test network
@@ -13,34 +14,38 @@ var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
 sendPayment(test1KeyPair.secret, test2KeyPair.public, "1000");
 
-function sendPayment(account1Secret, account2Public, amount) {
-    var sourceKeys = StellarSdk.Keypair.fromSecret(account1Secret);
-    var destinationId = account2Public;
+function sendPayment(amount) {
+    // var sourceKeys = StellarSdk.Keypair.fromSecret(test1KeyPair.secret);
+    // var destinationId = test2KeyPair.public;
 
     // First, check to make sure that the destination account exists.
     // You could skip this, but if the account does not exist, you will be charged
     // the transaction fee when the transaction fails.
-    server.loadAccount(destinationId)
+    server.loadAccount(test2KeyPair.public)
     // If the account is not found, surface a nicer error message for logging.
     .catch(StellarSdk.NotFoundError, function (error) {
         throw new Error('The destination account does not exist!');
     })
     // If there was no error, load up-to-date information on your account.
     .then(function() {
-        return server.loadAccount(sourceKeys.publicKey());
+        return server.loadAccount(testAccount1KeyPair.public);
     })
+    // .then(function() {
+    //     return 
+    // })
     .then(function(sourceAccount) {
+
         // Start building the transaction.
         var transaction = new StellarSdk.TransactionBuilder(sourceAccount)
         .addOperation(StellarSdk.Operation.payment({
-            destination: destinationId,
+            destination: test2KeyPair.public,
             // Because Stellar allows transaction in many currencies, you must
             // specify the asset type. The special "native" asset represents Lumens.
             asset: StellarSdk.Asset.native(),
             amount: amount
         }))
         .addOperation(StellarSdk.Operation.payment({
-            destination: destinationId,
+            destination: test3KeyPair.public,
             // Because Stellar allows transaction in many currencies, you must
             // specify the asset type. The special "native" asset represents Lumens.
             asset: StellarSdk.Asset.native(),
@@ -50,8 +55,10 @@ function sendPayment(account1Secret, account2Public, amount) {
         // optional and does not affect how Stellar treats the transaction.
         .addMemo(StellarSdk.Memo.text('Test Transaction'))
         .build();
+        
         // Sign the transaction to prove you are actually the person sending it.
         transaction.sign(sourceKeys);
+
         // And finally, send it off to Stellar!
         return server.submitTransaction(transaction);
     })
