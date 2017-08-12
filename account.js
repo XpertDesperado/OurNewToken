@@ -43,5 +43,7 @@ function createNewAccount() {
     }); 
 }
 
-createNewAccount();
+// Create new account
+// createNewAccount();
 
+// Check account info
