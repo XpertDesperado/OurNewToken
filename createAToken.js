@@ -11,6 +11,9 @@ var test1KeyPair = config.testAccount1;
 var test2KeyPair = config.testAccount2;
 var test3KeyPair = config.testAccount3;
 
+var skyTokenIssuerPublicKey = config.skyToken.issuerPublicKey;
+
+
 // Keys for accounts to issue and receive the new asset
 var test1Keys = StellarSdk.Keypair.fromSecret(test1KeyPair.secret); // issuer for SkyToken
 var test2Keys = StellarSdk.Keypair.fromSecret(test2KeyPair.secret);
@@ -51,8 +54,20 @@ function trustToken(assetName, issuingAccountPublicKey, receivingAccountKeyPair,
 
 // amount must be a string
 function sendPayment(assetName, fromKeys, receivingKeyPair, amount, callback) {
+    var asset;
+    if (assetName == "Lumens" || assetName == "XLM") {
+        asset = StellarSdk.Asset.native(); // Lumens.
+    }
+    else {
+        if (config[assetName].issuerPublicKey == undefined) {
+            console.log("Cannot handle payment with "+assetName+". Input their issuer public key into the config.json file");
+            return;
+        }
+        asset = new StellarSdk.Asset(assetName, config[assetName].issuerPublicKey);
+    }
+
     // Could be a custom asset
-    var asset = new StellarSdk.Asset(assetName, test1KeyPair.public);
+    // var asset = new StellarSdk.Asset(assetName, test1KeyPair.public);
 
     server.loadAccount(fromKeys.publicKey())
         .then(function(issuer) {

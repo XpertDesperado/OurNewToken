@@ -1,5 +1,6 @@
 {
-    "skyToken": {
+    "SkyToken": {
+        "issuerPublicKey": "GBN43TQYBIKZTMXQJWXCM4WA2B3IJ7ZF2BMTM6GL7JALWEDI5LCX367L"
     },
     "testAccount1": {
         "public": "GBN43TQYBIKZTMXQJWXCM4WA2B3IJ7ZF2BMTM6GL7JALWEDI5LCX367L",

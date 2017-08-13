@@ -4,6 +4,16 @@ Stellar.Network.usePublicNetwork();
 
 var server = new Stellar.Server('https://horizon-testnet.stellar.org');
 
+
+// Get predefined account info
+var config = require('./config.json');
+
+var test1KeyPair = config.testAccount1;
+var test2KeyPair = config.testAccount2;
+var test3KeyPair = config.testAccount3;
+
+
+
 function createKeyPair() {
     // create a completely new and unique pair of keys
     var pair = Stellar.Keypair.random();
@@ -41,11 +51,39 @@ function createNewAccount() {
     }); 
 }
 
-function getBalances(publicKey) {
+function getBalances(publicKey, callback) {
     server.loadAccount(publicKey).then(function(acct) {
-        console.log(JSON.stringify(acct));
+        var balances = acct.balances;
+        console.log("----------------")
+        console.log(acct._baseAccount._accountId); // 
+        for (var i in balances) {
+
+            console.log(""); // extra newline
+
+            var b = balances[i];
+            if (b.asset_type == 'native') {
+                // Lumens
+                console.log("Lumens");
+                console.log("Balance: "+b.balance);
+            }
+            else {
+                console.log(b.asset_code);
+                console.log("Balance: "+b.balance);
+                console.log("Limit: "+b.limit);
+                console.log("Issuer: "+b.asset_issuer);
+            }
+        }
+
+        if (callback) callback();
     });
 }
+
+getBalances(test1KeyPair.public, function() {
+    getBalances(test2KeyPair.public, function() {
+        getBalances(test3KeyPair.public);
+    });
+});
+
 
 // Create new account
 // createNewAccount();

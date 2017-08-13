@@ -15,7 +15,7 @@ var sourceKeys = StellarSdk.Keypair.fromSecret(test1KeyPair.secret);
 var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
 function sendPayment(amount) {
-    // First, check to make sure that the destination account exists. (skippable, but FEE maybe)
+    // First, check to make sure that the destination account exists. (skippable, but fee)
     server.loadAccount(test2KeyPair.public)
     .catch(StellarSdk.NotFoundError, function (error) {
         throw new Error('The destination account does not exist!');
