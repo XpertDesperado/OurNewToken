@@ -4,8 +4,6 @@ Stellar.Network.usePublicNetwork();
 
 var server = new Stellar.Server('https://horizon-testnet.stellar.org');
 
-
-
 function createKeyPair() {
     // create a completely new and unique pair of keys
     var pair = Stellar.Keypair.random();
@@ -41,6 +39,12 @@ function createNewAccount() {
             console.log(kp);
         }
     }); 
+}
+
+function getBalances(publicKey) {
+    server.loadAccount(publicKey).then(function(acct) {
+        console.log(JSON.stringify(acct));
+    });
 }
 
 // Create new account
