@@ -19,50 +19,6 @@ var test3Keys = StellarSdk.Keypair.fromSecret(test3KeyPair.secret);
 // Server
 var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
-// function createToken(name) {
-    
-
-//     // Create an object to represent the new asset
-//     var skyToken = new StellarSdk.Asset(name, fromKeys.publicKey());
-
-//     // First, the receiving account must trust the asset
-//     server.loadAccount(receivingKeys.publicKey())
-//     .then(function(receiver) {
-//         var transaction = new StellarSdk.TransactionBuilder(receiver)
-
-//         // The `changeTrust` operation creates (or alters) a trustline
-//         // The `limit` parameter below is optional
-//         .addOperation(StellarSdk.Operation.changeTrust({
-//             asset: skyToken,
-//             limit: '1000'
-//         }))
-//         .build();
-
-//         transaction.sign(receivingKeys);
-
-//         return server.submitTransaction(transaction);
-//     })
-
-//     // Second, the issuing account actually sends a payment using the asset
-//     .then(function() {
-//         return server.loadAccount(fromKeys.publicKey())
-//     })
-//     .then(function(issuer) {
-//         var transaction = new StellarSdk.TransactionBuilder(issuer)
-//         .addOperation(StellarSdk.Operation.payment({
-//             destination: receivingKeys.publicKey(),
-//             asset: skyToken,
-//             amount: '10'
-//         }))
-//         .build();
-//         transaction.sign(fromKeys);
-//         return server.submitTransaction(transaction);
-//     })
-//     .catch(function(error) {
-//         console.error('Error!', error);
-//     });
-// }
-
 // Make it so that the receiving account "trusts" our custom asset
 function trustToken(assetName, issuingAccountPublicKey, receivingAccountKeyPair, callback) {
     // Create an object to represent the new asset
