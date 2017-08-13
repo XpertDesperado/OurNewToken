@@ -14,8 +14,6 @@ var sourceKeys = StellarSdk.Keypair.fromSecret(test1KeyPair.secret);
 // use the test network
 var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
-sendPayment("1000");
-
 function sendPayment(amount) {
     // First, check to make sure that the destination account exists. (skippable, but FEE maybe)
     server.loadAccount(test2KeyPair.public)
@@ -34,15 +32,15 @@ function sendPayment(amount) {
         var transaction = new StellarSdk.TransactionBuilder(sourceAccount)
         .addOperation(StellarSdk.Operation.payment({
             destination: test2KeyPair.public,
-            asset: StellarSdk.Asset.native(), // Lumens.
+            asset: new StellarSdk.Asset("SKyToken", test1KeyPair.public), //StellarSdk.Asset.native(), // Lumens.
             amount: amount
         }))
-        .addOperation(StellarSdk.Operation.payment({
-            source: test2KeyPair.public,
-            destination: test3KeyPair.public,
-            asset: StellarSdk.Asset.native(), // Lumens.
-            amount: amount
-        }))
+        // .addOperation(StellarSdk.Operation.payment({
+        //     source: test2KeyPair.public,
+        //     destination: test3KeyPair.public,
+        //     asset: StellarSdk.Asset.native(), // Lumens.
+        //     amount: amount
+        // }))
         // A memo allows you to add your own metadata to a transaction. It's
         // optional and does not affect how Stellar treats the transaction.
         .addMemo(StellarSdk.Memo.text('Test Transaction'))
@@ -58,7 +56,8 @@ function sendPayment(amount) {
         console.log('Success! Results:', result);
     })
     .catch(function(error) {
-        console.error('Something went wrong!', error);
+        console.error('Something went wrong!');
+        console.log(JSON.stringify(error));
     });
 }
 
@@ -83,3 +82,5 @@ function buildTransaction(testAccount1KeyPair, testAccount2Public) {
         }))
         .build();
 }
+
+sendPayment("1");
