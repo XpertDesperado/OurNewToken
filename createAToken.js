@@ -60,7 +60,7 @@ function sendPayment(assetName, fromKeys, receivingKeyPair, amount, callback) {
     }
     else {
         if (config[assetName].issuerPublicKey == undefined) {
-            console.log("Cannot handle payment with "+assetName+". Input their issuer public key into the config.json file");
+            console.log("Cannot handle payment with "+assetName+". Input their issuer public key into the config.json file.");
             return;
         }
         asset = new StellarSdk.Asset(assetName, config[assetName].issuerPublicKey);
