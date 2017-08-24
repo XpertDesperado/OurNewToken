@@ -78,11 +78,13 @@ function getBalances(publicKey, callback) {
     });
 }
 
-getBalances(test1KeyPair.public, function() {
-    getBalances(test2KeyPair.public, function() {
-        getBalances(test3KeyPair.public);
+// getBalances(test2KeyPair.public, function() {
+    getBalances('GDFDCKDQ65AG2WIFOJSWQI2VDNVROECQR7ECP2QWRJABRMXU6L2YQYIM', function() {
+        // getBalances(test3KeyPair.public);
     });
-});
+// });
+
+
 
 
 // Create new account

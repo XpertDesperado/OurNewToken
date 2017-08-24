@@ -59,6 +59,7 @@ function exercise1() {
     });
 }
 
+// Something
 function exercise2() {
 
 }
